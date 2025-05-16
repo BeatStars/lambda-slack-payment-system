@@ -1,21 +1,23 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: 'Slack Bot using AWS Lambda - Antoine Cichowicz | Github: Yris Ops'
+Description: 'Slack Bot using AWS Lambda'
 
 Parameters:
   BotToken:
     Type: String
     Description: "The Slack bot token"
-
-  AccountNumber:
-    Type: String
-    Description: "The AWS account number"
-
   AppName:
     Description: Name of Application
     Type: String
-    Default: apigw-http-slack-lambda
-
+    Default: slack-payment-system
+  Env:
+    Type: String
+    AllowedValues:
+      - local
+      - dev
+      - stage
+      - prod
+      
 Resources:
   MyFunctionRole:
     Type: AWS::IAM::Role
@@ -37,12 +39,12 @@ Resources:
           - Effect: Allow
             Action:
               - logs:CreateLogGroup
-            Resource: !Sub 'arn:aws:logs:us-east-1:${AccountNumber}*'
+            Resource: !Sub 'arn:aws:logs:us-east-1:210298337781*'
           - Effect: Allow
             Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
-            Resource: !Sub 'arn:aws:logs:us-east-1:${AccountNumber}:log-group:/aws/lambda/MyFunction:*'
+            Resource: !Sub 'arn:aws:logs:us-east-1:210298337781:log-group:/aws/lambda/MyFunction:*'
 
   MyFunction:
     Type: AWS::Lambda::Function
